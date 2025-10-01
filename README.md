@@ -1,178 +1,178 @@
 # La Chouette
 
-Application web de traitement et d'extraction de données de documents avec intelligence artificielle.
+Web application for document processing and data extraction with artificial intelligence.
 
 ## Description
 
-La Chouette est une plateforme Flask qui permet de traiter des documents (PDF, DOCX, images, Excel) et d'extraire automatiquement des données structurées en utilisant l'API Mistral pour l'intelligence artificielle.
+La Chouette is a Flask platform that allows processing documents (PDF, DOCX, images, Excel) and automatically extracting structured data using the Mistral AI API for artificial intelligence.
 
-## Fonctionnalités
+## Features
 
-### Traitement de documents
-- Upload de fichiers Excel/CSV avec détection automatique des colonnes
-- Support multi-formats : PDF, DOCX, images (JPG, PNG)
-- Extraction de texte et métadonnées
+### Document Processing
+- Excel/CSV file upload with automatic column detection
+- Multi-format support: PDF, DOCX, images (JPG, PNG)
+- Text and metadata extraction
 
-### Catégorisation intelligente
-- Organisation manuelle des documents
-- Organisation automatique par IA avec classification
-- Interface drag-and-drop intuitive
+### Smart Categorization
+- Manual document organization
+- Automatic AI organization with classification
+- Intuitive drag-and-drop interface
 
-### Configuration des champs
-- Définition de champs personnalisés par catégorie
-- Génération automatique de champs par IA
-- Gestion des types de données (text, date, float, etc.)
-- Génération de descriptions de champs par IA
-- Valeurs autorisées configurables
+### Field Configuration
+- Custom field definition per category
+- Automatic field generation with AI
+- Data type management (text, date, float, etc.)
+- AI-generated field descriptions
+- Configurable allowed values
 
-### Extraction de données
-- Extraction automatique avec intelligence artificielle
-- Justification des extractions avec passages sources
-- Interface de validation et correction
+### Data Extraction
+- Automatic extraction with artificial intelligence
+- Extraction justifications with source passages
+- Validation and correction interface
 
-### Export des résultats
-- Export Excel avec formatage et couleurs
-- Export CSV
-- Données extraites et justifications incluses
+### Results Export
+- Excel export with formatting and colors
+- CSV export
+- Extracted data and justifications included
 
 ## Installation
 
-### Prérequis
+### Prerequisites
 - Python 3.8+
-- Clé API Mistral
+- Mistral API key
 
-### Installation des dépendances
+### Dependencies Installation
 ```bash
 pip install -r requirements.txt
 ```
 
 ### Configuration
-1. Créez un fichier `mistral_api_key.txt` à la racine du projet
-2. Ajoutez votre clé API Mistral dans ce fichier
-3. Lancez l'application :
+1. Create a `mistral_api_key.txt` file at the project root
+2. Add your Mistral API key in this file
+3. Launch the application:
 ```bash
 python app.py
 ```
 
-L'application sera accessible sur `http://localhost:5001`
+The application will be accessible at `http://localhost:5001`
 
-## Structure du projet
+## Project Structure
 
 ```
 la_chouette/
-├── app.py                 # Application Flask principale
-├── requirements.txt       # Dépendances Python
-├── catalog.json          # Configuration des champs
-├── mistral_api_key.txt   # Clé API (à créer)
-├── templates/            # Templates HTML
+├── app.py                 # Main Flask application
+├── requirements.txt       # Python dependencies
+├── catalog.json          # Field configuration
+├── mistral_api_key.txt   # API key (to be created)
+├── templates/            # HTML templates
 │   ├── index.html
 │   ├── categorization.html
 │   ├── field_selection.html
 │   ├── extraction.html
 │   └── validation.html
-├── static/               # Fichiers statiques
-│   ├── css/             # Feuilles de style
+├── static/               # Static files
+│   ├── css/             # Stylesheets
 │   ├── js/              # JavaScript
-│   └── images/          # Images et logos
-├── documents_json/       # Documents traités
-└── uploads/             # Fichiers uploadés
+│   └── images/          # Images and logos
+├── documents_json/       # Processed documents
+└── uploads/             # Uploaded files
 ```
 
-## Utilisation
+## Usage
 
-### 1. Upload de données
-- Téléchargez un fichier Excel/CSV depuis la page d'accueil
-- L'application détecte automatiquement les colonnes disponibles
+### 1. Data Upload
+- Upload an Excel/CSV file from the home page
+- The application automatically detects available columns
 
-### 2. Catégorisation
-- Organisez les documents manuellement ou utilisez l'IA
-- Créez des catégories personnalisées
-- Utilisez le drag-and-drop pour organiser
+### 2. Categorization
+- Organize documents manually or use AI
+- Create custom categories
+- Use drag-and-drop to organize
 
-### 3. Configuration des champs
-- Définissez les champs à extraire pour chaque catégorie
-- Générez automatiquement des champs avec l'IA
-- Configurez les types de données et valeurs autorisées
-- Générez des descriptions de champs avec l'IA
+### 3. Field Configuration
+- Define fields to extract for each category
+- Automatically generate fields with AI
+- Configure data types and allowed values
+- Generate field descriptions with AI
 
 ### 4. Extraction
-- Lancez l'extraction automatique des données
-- Validez et corrigez les résultats
-- Consultez les justifications pour chaque extraction
+- Launch automatic data extraction
+- Validate and correct results
+- Review justifications for each extraction
 
 ### 5. Export
-- Exportez les données en Excel ou CSV
-- Les champs extraits sont formatés en vert
-- Les justifications sont formatées en orange (Excel uniquement)
+- Export data in Excel or CSV format
+- Extracted fields are formatted in green
+- Justifications are formatted in orange (Excel only)
 
 ## API Endpoints
 
 ### Documents
-- `GET /` - Page d'accueil
-- `POST /upload_excel` - Upload de fichier Excel/CSV
-- `GET /get_all_documents` - Récupération de tous les documents
-- `POST /reset_all` - Reset complet des données
+- `GET /` - Home page
+- `POST /upload_excel` - Excel/CSV file upload
+- `GET /get_all_documents` - Retrieve all documents
+- `POST /reset_all` - Complete data reset
 
-### Catégorisation
-- `GET /categorization` - Page de catégorisation
-- `POST /update_document_category` - Mise à jour de catégorie
-- `POST /organize_documents_with_ai` - Organisation par IA
+### Categorization
+- `GET /categorization` - Categorization page
+- `POST /update_document_category` - Category update
+- `POST /organize_documents_with_ai` - AI organization
 
-### Configuration des champs
-- `GET /field-selection` - Page de configuration
-- `GET /get_catalog` - Récupération du catalogue
-- `POST /save_catalog` - Sauvegarde du catalogue
-- `POST /generate_fields` - Génération de champs par IA
-- `POST /generate_field_descriptions` - Génération de descriptions par IA
+### Field Configuration
+- `GET /field-selection` - Configuration page
+- `GET /get_catalog` - Catalog retrieval
+- `POST /save_catalog` - Catalog save
+- `POST /generate_fields` - AI field generation
+- `POST /generate_field_descriptions` - AI description generation
 
 ### Extraction
-- `GET /extraction` - Page d'extraction
-- `POST /extract_fields` - Extraction des champs
-- `GET /validation` - Page de validation
-- `POST /justify_field` - Génération de justification
+- `GET /extraction` - Extraction page
+- `POST /extract_fields` - Field extraction
+- `GET /validation` - Validation page
+- `POST /justify_field` - Justification generation
 
 ### Export
-- `GET /export_data` - Export des données
+- `GET /export_data` - Data export
 
-## Technologies utilisées
+## Technologies Used
 
-- **Backend** : Flask (Python)
-- **Frontend** : HTML, CSS, JavaScript vanilla
-- **IA** : Mistral AI API
-- **Traitement de documents** : 
+- **Backend**: Flask (Python)
+- **Frontend**: HTML, CSS, vanilla JavaScript
+- **AI**: Mistral AI API
+- **Document Processing**: 
   - PyPDF2 (PDF)
   - python-docx (DOCX)
   - Pillow (Images)
   - pandas (Excel/CSV)
-- **Export** : openpyxl (Excel avec formatage)
+- **Export**: openpyxl (Excel with formatting)
 
-## Sécurité
+## Security
 
-- La clé API Mistral est stockée côté serveur uniquement
-- Pas d'exposition de la clé API dans le frontend
-- Validation des données d'entrée
-- Gestion d'erreurs robuste
+- Mistral API key is stored server-side only
+- No API key exposure in frontend
+- Input data validation
+- Robust error handling
 
 ## Limitations
 
-- Limite de taille des fichiers selon la configuration Flask
-- Dépendance à l'API Mistral (nécessite une connexion internet)
-- Traitement des documents en mode synchrone
+- File size limits according to Flask configuration
+- Dependency on Mistral API (requires internet connection)
+- Synchronous document processing
 
-## Développement
+## Development
 
-### Structure du code
-- `app.py` : Routes Flask et logique métier
-- `static/js/` : JavaScript par page (modulaire)
-- `templates/` : Templates HTML avec structure commune
-- `static/css/` : Styles CSS organisés par fonctionnalité
+### Code Structure
+- `app.py`: Flask routes and business logic
+- `static/js/`: JavaScript per page (modular)
+- `templates/`: HTML templates with common structure
+- `static/css/`: CSS styles organized by feature
 
-### Ajout de nouvelles fonctionnalités
-1. Ajouter la route dans `app.py`
-2. Créer/modifier le template HTML correspondant
-3. Ajouter le JavaScript dans le fichier approprié
-4. Tester avec différents types de documents
+### Adding New Features
+1. Add route in `app.py`
+2. Create/modify corresponding HTML template
+3. Add JavaScript in appropriate file
+4. Test with different document types
 
-## Licence
+## License
 
-Ce projet est sous licence MIT.
+This project is licensed under the MIT License.

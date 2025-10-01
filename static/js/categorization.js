@@ -7,6 +7,7 @@ let draggedElement = null;
 document.addEventListener('DOMContentLoaded', function() {
     initializeEventListeners();
     loadDocuments();
+    initializeLanguageSelector();
 });
 
 function initializeEventListeners() {
@@ -614,5 +615,37 @@ async function handleCatalogFile(event) {
     
     // Réinitialiser l'input
     event.target.value = '';
+}
+
+// Gestion du sélecteur de langue
+function initializeLanguageSelector() {
+    const languageSelector = document.getElementById('language-selector');
+    if (!languageSelector) return;
+    
+    // Charger la langue sauvegardée ou utiliser le français par défaut
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'fr';
+    languageSelector.value = savedLanguage;
+    
+    // Écouter les changements de langue
+    languageSelector.addEventListener('change', function(e) {
+        const selectedLanguage = e.target.value;
+        localStorage.setItem('selectedLanguage', selectedLanguage);
+        
+        // Afficher un message de confirmation
+        showLanguageChangeMessage(selectedLanguage);
+        
+        // Ici on pourrait déclencher le changement de langue
+        // Pour l'instant, on ne fait que sauvegarder la préférence
+        console.log(`Langue sélectionnée: ${selectedLanguage}`);
+    });
+}
+
+function showLanguageChangeMessage(language) {
+    const messages = {
+        'fr': 'Langue changée vers le français',
+        'en': 'Language changed to English'
+    };
+    
+    showStatusMessage(messages[language] || 'Langue changée', 'info');
 }
 

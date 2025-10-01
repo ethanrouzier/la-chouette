@@ -58,6 +58,45 @@ body {
     position: absolute;
     top: 20px;
     right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Sélecteur de langue */
+.language-selector {
+    position: relative;
+}
+
+.language-dropdown {
+    appearance: none;
+    background: var(--white);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 140px;
+}
+
+.language-dropdown:hover {
+    border-color: var(--primary-orange);
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
+}
+
+.language-dropdown:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.language-dropdown option {
+    padding: 8px;
+    background: var(--white);
+    color: var(--text-dark);
 }
 
 .btn-sm {
