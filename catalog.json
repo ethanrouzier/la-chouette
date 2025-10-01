@@ -1,0 +1,88 @@
+{
+  "TNM": {
+    "T": {
+      "type": "literal",
+      "allowed_values": [
+        "Tx",
+        "T0",
+        "T1",
+        "T2",
+        "T3"
+      ],
+      "description": ""
+    },
+    "N": {
+      "type": "literal",
+      "allowed_values": [
+        "Nx",
+        "N0",
+        "N1",
+        "N2",
+        "N3"
+      ],
+      "description": ""
+    },
+    "M": {
+      "type": "literal",
+      "allowed_values": [
+        "Mx",
+        "M0",
+        "M1"
+      ],
+      "description": ""
+    },
+    "Number of metastatic nodes": {
+      "type": "int",
+      "allowed_values": [],
+      "description": ""
+    },
+    "Maximal tumor diameter or size of the invasive component in millimeter": {
+      "type": "union_int_float",
+      "allowed_values": [],
+      "description": ""
+    },
+    "organ": {
+      "type": "str",
+      "allowed_values": [],
+      "description": ""
+    },
+    "Texte justifiant T": {
+      "type": "str",
+      "allowed_values": [],
+      "description": ""
+    },
+    "Texte justifiant N": {
+      "type": "str",
+      "allowed_values": [],
+      "description": ""
+    },
+    "Texte justifiant M": {
+      "type": "str",
+      "allowed_values": [],
+      "description": ""
+    },
+    "Texte justifiant Number of metastatic nodes": {
+      "type": "str",
+      "allowed_values": [],
+      "description": ""
+    },
+    "Texte justifiant Maximal tumor diameter or size": {
+      "type": "str",
+      "allowed_values": [],
+      "description": ""
+    },
+    "Pure in situ disease without invasive component": {
+      "type": "bool",
+      "allowed_values": [
+        "Oui",
+        "Non"
+      ],
+      "description": ""
+    },
+    "Marge minimale d'exérèse en millimètres": {
+      "type": "float",
+      "allowed_values": [],
+      "description": ""
+    }
+  }
+}

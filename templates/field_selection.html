@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Chouette - Choix des Champs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/field_selection.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="La Chouette" class="logo">
+                <h1>La Chouette</h1>
+            </div>
+            <div class="header-actions">
+                <button id="api-config-btn" class="btn btn-secondary btn-sm">
+                    <span class="btn-icon">🔑</span>
+                    Configuration API
+                </button>
+            </div>
+            <p class="subtitle">Structuration de Données - Étape 3 : Choix des Champs</p>
+        </header>
+
+        <!-- Navigation des étapes -->
+        <nav class="steps-nav">
+            <div class="step" onclick="window.location.href='/'">
+                <span class="step-number">1</span>
+                <span class="step-title">Import des Documents</span>
+            </div>
+            <div class="step" onclick="window.location.href='/categorization'">
+                <span class="step-number">2</span>
+                <span class="step-title">Catégorisation</span>
+            </div>
+            <div class="step active">
+                <span class="step-number">3</span>
+                <span class="step-title">Choix des Champs</span>
+            </div>
+            <div class="step" onclick="window.location.href='/extraction'">
+                <span class="step-number">4</span>
+                <span class="step-title">Extraction</span>
+            </div>
+            <div class="step" onclick="window.location.href='/validation'">
+                <span class="step-number">5</span>
+                <span class="step-title">Validation</span>
+            </div>
+        </nav>
+
+        <!-- Contrôles principaux -->
+        <div class="field-selection-controls">
+            <div class="control-panel">
+                <h3>Configuration des champs</h3>
+                <div class="control-options">
+                    <button id="download-catalog-btn" class="btn btn-outline">
+                        <span class="btn-icon">📥</span>
+                        Télécharger le catalog
+                    </button>
+                    <button id="generate-descriptions-btn" class="btn btn-secondary">
+                        <span class="btn-icon">🤖</span>
+                        Générer descriptions IA
+                    </button>
+                    <button id="save-catalog-btn" class="btn btn-primary">
+                        <span class="btn-icon">💾</span>
+                        Sauvegarder le catalog
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration IA -->
+        <div class="ai-config" id="ai-config" style="display: none;">
+            <div class="config-panel">
+                <h3>Configuration IA pour génération de champs</h3>
+                <div class="config-form">
+                    <div class="form-group">
+                        <label for="mistral-api-key">Clé API Mistral :</label>
+                        <input type="password" id="mistral-api-key" placeholder="Votre clé API Mistral">
+                        <small>Optionnel - pour une génération plus intelligente</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="num-fields">Nombre de champs à générer :</label>
+                        <input type="number" id="num-fields" value="7" min="5" max="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="ai-instructions">Consignes pour l'IA :</label>
+                        <textarea id="ai-instructions" rows="3" placeholder="Ex: Focus sur les champs médicaux, inclure les dates importantes, etc."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="generate-fields" class="btn btn-primary">Générer les champs</button>
+                        <button type="button" id="generate-all-fields" class="btn btn-primary">
+                            <span class="btn-icon">🚀</span>
+                            Générer pour toutes les catégories
+                        </button>
+                        <button type="button" id="cancel-ai" class="btn btn-secondary">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progression de génération -->
+        <div class="generation-progress" id="generation-progress" style="display: none;">
+            <div class="progress-panel">
+                <h3>Génération en cours...</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-text" id="progress-text">Initialisation...</div>
+                <div class="progress-details" id="progress-details">
+                    <!-- Les détails de progression apparaîtront ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des catégories -->
+        <div class="categories-section">
+            <h3>Catégories et leurs champs</h3>
+            <div class="categories-container" id="categories-container">
+                <!-- Les catégories apparaîtront ici -->
+            </div>
+        </div>
+
+        <!-- Modal d'ajout de champ -->
+        <div class="modal" id="add-field-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Ajouter un champ</h3>
+                    <button class="modal-close" id="close-add-field">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="field-name">Nom du champ :</label>
+                        <input type="text" id="field-name" placeholder="Ex: diagnostic">
+                    </div>
+                    <div class="form-group">
+                        <label for="field-type">Type de champ :</label>
+                        <select id="field-type">
+                            <option value="text">Texte</option>
+                            <option value="number">Nombre</option>
+                            <option value="date">Date</option>
+                            <option value="boolean">Booléen</option>
+                            <option value="select">Liste déroulante</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="field-description">Description :</label>
+                        <textarea id="field-description" rows="2" placeholder="Description du champ"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="create-field" class="btn btn-primary">Créer</button>
+                        <button type="button" id="cancel-add-field" class="btn btn-secondary">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de gestion des valeurs autorisées -->
+        <div class="modal" id="allowed-values-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="allowed-values-title">Valeurs autorisées</h3>
+                    <button class="modal-close" id="close-allowed-values">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="new-allowed-value">Ajouter une valeur :</label>
+                        <div class="input-group">
+                            <input type="text" id="new-allowed-value" placeholder="Nouvelle valeur">
+                            <button type="button" id="add-allowed-value" class="btn btn-secondary">Ajouter</button>
+                        </div>
+                    </div>
+                    <div class="allowed-values-list" id="allowed-values-list">
+                        <!-- Les valeurs autorisées apparaîtront ici -->
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="save-allowed-values" class="btn btn-primary">Sauvegarder</button>
+                        <button type="button" id="cancel-allowed-values" class="btn btn-secondary">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal d'édition de champ -->
+        <div class="modal" id="edit-field-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Modifier le champ</h3>
+                    <button class="modal-close" id="close-edit-field">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="edit-field-name">Nom du champ :</label>
+                        <input type="text" id="edit-field-name" placeholder="Ex: diagnostic">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-field-description">Description :</label>
+                        <textarea id="edit-field-description" rows="3" placeholder="Description du champ..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-field-type">Type de champ :</label>
+                        <select id="edit-field-type">
+                            <option value="text">Texte</option>
+                            <option value="number">Nombre</option>
+                            <option value="date">Date</option>
+                            <option value="boolean">Booléen</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Valeurs autorisées :</label>
+                        <div class="allowed-values-input">
+                            <input type="text" id="edit-allowed-value" placeholder="Ajouter une valeur autorisée">
+                            <button type="button" id="add-allowed-value-edit">Ajouter</button>
+                        </div>
+                        <div class="allowed-values-list" id="edit-allowed-values-list">
+                            <!-- Les valeurs autorisées apparaîtront ici -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-field-edit" class="btn btn-primary">Sauvegarder</button>
+                    <button id="cancel-field-edit" class="btn btn-secondary">Annuler</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de configuration API -->
+        <div class="modal" id="api-config-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Configuration de la clé API Mistral</h3>
+                    <button class="modal-close" id="close-api-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="api-key-input">Clé API Mistral :</label>
+                        <input type="password" id="api-key-input" placeholder="Votre clé API Mistral">
+                        <small>Cette clé sera utilisée pour toutes les fonctionnalités IA de l'application</small>
+                    </div>
+                    <div class="api-status" id="api-status">
+                        <!-- Statut de la clé API -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-api-key" class="btn btn-primary">Sauvegarder</button>
+                    <button id="test-api-key" class="btn btn-secondary">Tester</button>
+                    <button id="cancel-api-key" class="btn btn-secondary">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/field_selection.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/api_config.js') }}"></script>
+</body>
+</html>

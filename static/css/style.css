@@ -1,0 +1,567 @@
+/* Variables CSS */
+:root {
+    --primary-orange: #FF6B35;
+    --light-orange: #FF8C69;
+    --dark-orange: #E55A2B;
+    --beige: #F5F1E8;
+    --light-beige: #FAF8F3;
+    --dark-beige: #E8E2D5;
+    --text-dark: #2C2C2C;
+    --text-light: #666666;
+    --white: #FFFFFF;
+    --border-color: #DDD;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Reset et base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, var(--beige) 0%, var(--light-beige) 100%);
+    color: var(--text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px 0;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.header-actions {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+.btn-success {
+    background: #28a745;
+    color: var(--white);
+}
+
+.btn-success:hover {
+    background: #218838;
+}
+
+/* Statuts API */
+.api-status {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.api-status-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.api-status-warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.status-icon {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-orange);
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-weight: 400;
+}
+
+/* Navigation des étapes */
+.steps-nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.step:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.step.active {
+    background: var(--primary-orange);
+    color: var(--white);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--beige);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.step.active .step-number {
+    background: var(--white);
+    color: var(--primary-orange);
+}
+
+.step-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Section d'upload */
+.upload-section {
+    margin-bottom: 40px;
+}
+
+.upload-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.upload-option {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.upload-option:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+.option-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.upload-option h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-orange);
+    margin-bottom: 10px;
+}
+
+.upload-option p {
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+/* Zone de drop */
+.drop-zone {
+    border: 3px dashed var(--border-color);
+    border-radius: 15px;
+    padding: 40px 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: var(--light-beige);
+}
+
+.drop-zone:hover,
+.drop-zone.dragover {
+    border-color: var(--primary-orange);
+    background: var(--beige);
+    transform: scale(1.02);
+}
+
+.drop-zone-content {
+    text-align: center;
+}
+
+.drop-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    opacity: 0.7;
+}
+
+.drop-zone p {
+    color: var(--text-light);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Configuration Excel */
+.excel-config {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+}
+
+.config-panel h3 {
+    color: var(--primary-orange);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.config-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.form-group select,
+.form-group input {
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: var(--white);
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-orange);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* Boutons */
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--primary-orange);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: var(--dark-orange);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: var(--dark-beige);
+    color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+    background: var(--border-color);
+    transform: translateY(-2px);
+}
+
+/* Section des documents */
+.documents-section {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+}
+
+.documents-section h3 {
+    color: var(--primary-orange);
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.documents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.document-card {
+    background: var(--light-beige);
+    border-radius: 15px;
+    padding: 20px;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.document-card:hover {
+    border-color: var(--primary-orange);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.document-title {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.document-filename {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.document-preview {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    max-height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.document-type {
+    display: inline-block;
+    background: var(--primary-orange);
+    color: var(--white);
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: var(--white);
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow: hidden;
+    box-shadow: var(--shadow-hover);
+}
+
+.modal-header {
+    background: var(--primary-orange);
+    color: var(--white);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+    padding: 30px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.modal-body p {
+    line-height: 1.6;
+    color: var(--text-dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .upload-options {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .steps-nav {
+        gap: 10px;
+    }
+    
+    .step {
+        min-width: 100px;
+        padding: 15px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .logo-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.document-card {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--primary-orange);
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

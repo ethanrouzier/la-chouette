@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Chouette - Catégorisation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/categorization.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="La Chouette" class="logo">
+                <h1>La Chouette</h1>
+            </div>
+            <div class="header-actions">
+                <button id="api-config-btn" class="btn btn-secondary btn-sm">
+                    <span class="btn-icon">🔑</span>
+                    Configuration API
+                </button>
+            </div>
+            <p class="subtitle">Structuration de Données - Étape 2 : Catégorisation</p>
+        </header>
+
+        <!-- Navigation des étapes -->
+        <nav class="steps-nav">
+            <div class="step" onclick="window.location.href='/'">
+                <span class="step-number">1</span>
+                <span class="step-title">Import des Documents</span>
+            </div>
+            <div class="step active">
+                <span class="step-number">2</span>
+                <span class="step-title">Catégorisation</span>
+            </div>
+            <div class="step" onclick="window.location.href='/field-selection'">
+                <span class="step-number">3</span>
+                <span class="step-title">Choix des Champs</span>
+            </div>
+            <div class="step" onclick="window.location.href='/extraction'">
+                <span class="step-number">4</span>
+                <span class="step-title">Extraction</span>
+            </div>
+            <div class="step" onclick="window.location.href='/validation'">
+                <span class="step-number">5</span>
+                <span class="step-title">Validation</span>
+            </div>
+        </nav>
+
+        <!-- Contrôles principaux -->
+        <div class="categorization-controls">
+            <div class="control-panel">
+                <h3>Options de catégorisation</h3>
+                <div class="control-options">
+                    <button id="auto-cluster-btn" class="btn btn-primary">
+                        <span class="btn-icon">🤖</span>
+                        Clustering automatique
+                    </button>
+                    <button id="ai-organization-btn" class="btn btn-secondary">
+                        <span class="btn-icon">🤖</span>
+                        Organisation par IA
+                    </button>
+                    <button id="visualize-btn" class="btn btn-secondary">
+                        <span class="btn-icon">📊</span>
+                        Visualiser les catégories
+                    </button>
+                    <button id="load-catalog-btn" class="btn btn-outline">
+                        <span class="btn-icon">📁</span>
+                        Charger un catalog
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input file caché pour le chargement de catalog -->
+        <input type="file" id="catalog-file-input" accept=".json" style="display: none;">
+
+        <!-- Configuration Mistral -->
+        <div class="mistral-config" id="mistral-config" style="display: none;">
+            <div class="config-panel">
+                <h3>Configuration Mistral</h3>
+                <div class="config-form">
+                    <div class="form-group">
+                        <label for="mistral-api-key">Clé API Mistral :</label>
+                        <input type="password" id="mistral-api-key" placeholder="Votre clé API Mistral">
+                        <small>Optionnel - pour le nommage automatique des catégories</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="mistral-instructions">Consignes pour Mistral :</label>
+                        <textarea id="mistral-instructions" rows="3" placeholder="Ex: Contexte médical, documents administratifs, etc."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="start-clustering" class="btn btn-primary">Démarrer le clustering</button>
+                        <button type="button" id="cancel-mistral" class="btn btn-secondary">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zone de catégorisation -->
+        <div class="categorization-workspace">
+            <!-- Documents non catégorisés -->
+            <div class="uncategorized-section">
+                <h3>Documents non catégorisés</h3>
+                <div class="documents-container" id="uncategorized-docs">
+                    <!-- Les documents apparaîtront ici -->
+                </div>
+            </div>
+
+            <!-- Catégories -->
+            <div class="categories-section">
+                <h3>Catégories</h3>
+                <div class="categories-container" id="categories-container">
+                    <!-- Les catégories apparaîtront ici -->
+                </div>
+                <button id="add-category-btn" class="btn btn-secondary add-category-btn">
+                    <span class="btn-icon">➕</span>
+                    Ajouter une catégorie
+                </button>
+            </div>
+        </div>
+
+        <!-- Visualisation -->
+        <div class="visualization-section" id="visualization-section" style="display: none;">
+            <h3>Visualisation des catégories</h3>
+            <div class="visualization-container">
+                <img id="cluster-visualization" src="" alt="Visualisation des clusters" style="display: none;">
+                <div id="visualization-loading" class="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Génération de la visualisation...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de prévisualisation -->
+        <div class="modal" id="preview-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Prévisualisation</h3>
+                    <button class="modal-close" id="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal d'ajout de catégorie -->
+        <div class="modal" id="add-category-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Ajouter une catégorie</h3>
+                    <button class="modal-close" id="close-add-category">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="new-category-name">Nom de la catégorie :</label>
+                        <input type="text" id="new-category-name" placeholder="Ex: Documents médicaux">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="create-category" class="btn btn-primary">Créer</button>
+                        <button type="button" id="cancel-add-category" class="btn btn-secondary">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal de configuration API -->
+        <div class="modal" id="api-config-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Configuration de la clé API Mistral</h3>
+                    <button class="modal-close" id="close-api-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="api-key-input">Clé API Mistral :</label>
+                        <input type="password" id="api-key-input" placeholder="Votre clé API Mistral">
+                        <small>Cette clé sera utilisée pour toutes les fonctionnalités IA de l'application</small>
+                    </div>
+                    <div class="api-status" id="api-status">
+                        <!-- Statut de la clé API -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-api-key" class="btn btn-primary">Sauvegarder</button>
+                    <button id="test-api-key" class="btn btn-secondary">Tester</button>
+                    <button id="cancel-api-key" class="btn btn-secondary">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/categorization.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/api_config.js') }}"></script>
+</body>
+</html>

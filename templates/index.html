@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Chouette - Structuration de Données</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="La Chouette" class="logo">
+                <h1>La Chouette</h1>
+            </div>
+            <div class="header-actions">
+                <button id="api-config-btn" class="btn btn-secondary btn-sm">
+                    <span class="btn-icon">🔑</span>
+                    Configuration API
+                </button>
+            </div>
+            <p class="subtitle">Structuration de Données - Étape 1</p>
+        </header>
+
+        <!-- Navigation des étapes -->
+        <nav class="steps-nav">
+            <div class="step active">
+                <span class="step-number">1</span>
+                <span class="step-title">Import des Documents</span>
+            </div>
+            <div class="step" onclick="window.location.href='/categorization'">
+                <span class="step-number">2</span>
+                <span class="step-title">Catégorisation</span>
+            </div>
+            <div class="step" onclick="window.location.href='/field-selection'">
+                <span class="step-number">3</span>
+                <span class="step-title">Choix des Champs</span>
+            </div>
+            <div class="step" onclick="window.location.href='/extraction'">
+                <span class="step-number">4</span>
+                <span class="step-title">Extraction</span>
+            </div>
+            <div class="step" onclick="window.location.href='/validation'">
+                <span class="step-number">5</span>
+                <span class="step-title">Validation</span>
+            </div>
+        </nav>
+
+        <!-- Zone de drag and drop -->
+        <div class="upload-section">
+            <div class="upload-options">
+                <div class="upload-option" id="documents-option">
+                    <div class="option-icon">📄</div>
+                    <h3>Documents</h3>
+                    <p>Word, PDF, TXT, PNG</p>
+                    <div class="drop-zone" id="documents-drop-zone">
+                        <div class="drop-zone-content">
+                            <div class="drop-icon">📁</div>
+                            <p>Glissez vos documents ici ou cliquez pour sélectionner</p>
+                            <input type="file" id="documents-input" multiple accept=".txt,.pdf,.docx,.png,.jpg,.jpeg" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="upload-option" id="excel-option">
+                    <div class="option-icon">📊</div>
+                    <h3>Tableaux</h3>
+                    <p>Excel, CSV</p>
+                    <div class="drop-zone" id="excel-drop-zone">
+                        <div class="drop-zone-content">
+                            <div class="drop-icon">📈</div>
+                            <p>Glissez votre fichier Excel/CSV ici</p>
+                            <input type="file" id="excel-input" accept=".xlsx,.xls,.csv" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Excel/CSV -->
+        <div class="excel-config" id="excel-config" style="display: none;">
+            <div class="config-panel">
+                <h3>Configuration du fichier</h3>
+                <div class="config-form">
+                    <div class="form-group">
+                        <label for="text-column">Colonne pour le texte :</label>
+                        <select id="text-column" required>
+                            <option value="">Sélectionnez une colonne</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="title-column">Colonne pour le titre (optionnel) :</label>
+                        <select id="title-column">
+                            <option value="">Aucune (utiliser Row 1, Row 2...)</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start-row">Ligne de début :</label>
+                            <input type="number" id="start-row" value="1" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="end-row">Ligne de fin :</label>
+                            <input type="number" id="end-row" placeholder="Toutes">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="process-excel" class="btn btn-primary">Traiter le fichier</button>
+                        <button type="button" id="cancel-excel" class="btn btn-secondary">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des documents uploadés -->
+        <div class="documents-section" id="documents-section" style="display: none;">
+            <h3>Documents importés</h3>
+            <div class="documents-grid" id="documents-grid">
+                <!-- Les documents apparaîtront ici -->
+            </div>
+        </div>
+
+        <!-- Modal de prévisualisation -->
+        <div class="modal" id="preview-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Prévisualisation</h3>
+                    <button class="modal-close" id="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="modal-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de configuration API -->
+        <div class="modal" id="api-config-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Configuration de la clé API Mistral</h3>
+                    <button class="modal-close" id="close-api-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="api-key-input">Clé API Mistral :</label>
+                        <input type="password" id="api-key-input" placeholder="Votre clé API Mistral">
+                        <small>Cette clé sera utilisée pour toutes les fonctionnalités IA de l'application</small>
+                    </div>
+                    <div class="api-status" id="api-status">
+                        <!-- Statut de la clé API -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-api-key" class="btn btn-primary">Sauvegarder</button>
+                    <button id="test-api-key" class="btn btn-secondary">Tester</button>
+                    <button id="cancel-api-key" class="btn btn-secondary">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/api_config.js') }}"></script>
+</body>
+</html>

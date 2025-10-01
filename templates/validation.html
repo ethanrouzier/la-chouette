@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Chouette - Validation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/validation.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="La Chouette" class="logo">
+                <h1>La Chouette</h1>
+            </div>
+            <div class="header-actions">
+                <button id="api-config-btn" class="btn btn-secondary btn-sm">
+                    <span class="btn-icon">🔑</span>
+                    Configuration API
+                </button>
+            </div>
+            <p class="subtitle">Structuration de Données - Étape 5 : Validation</p>
+        </header>
+
+        <!-- Navigation des étapes -->
+        <nav class="steps-nav">
+            <div class="step" onclick="window.location.href='/'">
+                <span class="step-number">1</span>
+                <span class="step-title">Import des Documents</span>
+            </div>
+            <div class="step" onclick="window.location.href='/categorization'">
+                <span class="step-number">2</span>
+                <span class="step-title">Catégorisation</span>
+            </div>
+            <div class="step" onclick="window.location.href='/field-selection'">
+                <span class="step-number">3</span>
+                <span class="step-title">Choix des Champs</span>
+            </div>
+            <div class="step" onclick="window.location.href='/extraction'">
+                <span class="step-number">4</span>
+                <span class="step-title">Extraction</span>
+            </div>
+            <div class="step active">
+                <span class="step-number">5</span>
+                <span class="step-title">Validation</span>
+            </div>
+        </nav>
+
+        <!-- Contrôles principaux -->
+        <div class="validation-controls">
+            <div class="control-panel">
+                <h3>Contrôles de validation</h3>
+                <div class="control-options">
+                    <button id="export-excel-btn" class="btn btn-outline">
+                        <span class="btn-icon">📊</span>
+                        Export Excel
+                    </button>
+                    <button id="export-csv-btn" class="btn btn-outline">
+                        <span class="btn-icon">📋</span>
+                        Export CSV
+                    </button>
+                    <button id="save-changes-btn" class="btn btn-primary">
+                        <span class="btn-icon">💾</span>
+                        Sauvegarder les modifications
+                    </button>
+                    <button id="reset-all-btn" class="btn btn-danger">
+                        <span class="btn-icon">🔄</span>
+                        Réinitialiser tout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sélection du document -->
+        <div class="document-selection">
+            <div class="selection-panel">
+                <h3>Sélection du document</h3>
+                <div class="document-list" id="document-list">
+                    <!-- Liste des documents -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Interface de validation -->
+        <div class="validation-interface" id="validation-interface" style="display: none;">
+            <div class="validation-layout">
+                <!-- Texte du document -->
+                <div class="document-text-panel">
+                    <div class="panel-header">
+                        <h3>Texte du document</h3>
+                        <div class="document-info">
+                            <span id="document-title"></span>
+                            <span id="document-category"></span>
+                        </div>
+                    </div>
+                    <div class="document-content" id="document-content">
+                        <!-- Contenu du document avec surlignage -->
+                    </div>
+                </div>
+
+                <!-- Champs extraits -->
+                <div class="extracted-fields-panel">
+                    <div class="panel-header">
+                        <h3>Champs extraits</h3>
+                        <button id="ai-justification-btn" class="btn btn-secondary btn-sm">
+                            <span class="btn-icon">🤖</span>
+                            Justification IA
+                        </button>
+                    </div>
+                    <div class="fields-container" id="fields-container">
+                        <!-- Champs extraits avec possibilité de modification -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de confirmation de réinitialisation -->
+        <div class="modal" id="reset-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Confirmation de réinitialisation</h3>
+                    <button class="modal-close" id="close-reset-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir réinitialiser complètement l'application ?</p>
+                    <p><strong>Cette action supprimera :</strong></p>
+                    <ul>
+                        <li>Tous les documents importés</li>
+                        <li>Le catalog des champs</li>
+                        <li>Les catégories créées</li>
+                        <li>Les champs extraits</li>
+                    </ul>
+                    <p><strong>Cette action est irréversible !</strong></p>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirm-reset" class="btn btn-danger">Confirmer la réinitialisation</button>
+                    <button id="cancel-reset" class="btn btn-secondary">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/api_config.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Chouette - Extraction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/extraction.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="La Chouette" class="logo">
+                <h1>La Chouette</h1>
+            </div>
+            <div class="header-actions">
+                <button id="api-config-btn" class="btn btn-secondary btn-sm">
+                    <span class="btn-icon">🔑</span>
+                    Configuration API
+                </button>
+            </div>
+            <p class="subtitle">Structuration de Données - Étape 4 : Extraction</p>
+        </header>
+
+        <!-- Navigation des étapes -->
+        <nav class="steps-nav">
+            <div class="step" onclick="window.location.href='/'">
+                <span class="step-number">1</span>
+                <span class="step-title">Import des Documents</span>
+            </div>
+            <div class="step" onclick="window.location.href='/categorization'">
+                <span class="step-number">2</span>
+                <span class="step-title">Catégorisation</span>
+            </div>
+            <div class="step" onclick="window.location.href='/field-selection'">
+                <span class="step-number">3</span>
+                <span class="step-title">Choix des Champs</span>
+            </div>
+            <div class="step active">
+                <span class="step-number">4</span>
+                <span class="step-title">Extraction</span>
+            </div>
+            <div class="step" onclick="window.location.href='/validation'">
+                <span class="step-number">5</span>
+                <span class="step-title">Validation</span>
+            </div>
+        </nav>
+
+        <!-- Configuration de l'extraction -->
+        <div class="extraction-config">
+            <div class="config-panel">
+                <h3>Configuration de l'extraction</h3>
+                <div class="config-form">
+                    <div class="form-group">
+                        <label for="mistral-api-key">Clé API Mistral :</label>
+                        <input type="password" id="mistral-api-key" placeholder="Votre clé API Mistral">
+                        <small>Requis pour l'extraction automatique</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="extraction-instructions">Instructions générales :</label>
+                        <textarea id="extraction-instructions" rows="3" placeholder="Ex: Extraire les informations de manière précise, respecter les valeurs autorisées, etc."></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="start-extraction" class="btn btn-primary">
+                            <span class="btn-icon">🚀</span>
+                            Démarrer l'extraction
+                        </button>
+                        <button type="button" id="preview-extraction" class="btn btn-secondary">
+                            <span class="btn-icon">👁️</span>
+                            Aperçu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progression de l'extraction -->
+        <div class="extraction-progress" id="extraction-progress" style="display: none;">
+            <div class="progress-panel">
+                <h3>Extraction en cours...</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-text" id="progress-text">Initialisation...</div>
+                <div class="progress-details" id="progress-details">
+                    <!-- Les détails de progression apparaîtront ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des catégories et champs -->
+        <div class="extraction-section">
+            <h3>Configuration des champs par catégorie</h3>
+            <div class="categories-container" id="categories-container">
+                <!-- Les catégories apparaîtront ici -->
+            </div>
+        </div>
+
+        <!-- Résultats de l'extraction -->
+        <div class="extraction-results" id="extraction-results" style="display: none;">
+            <h3>Résultats de l'extraction</h3>
+            <div class="results-summary" id="results-summary">
+                <!-- Résumé des résultats -->
+            </div>
+            <div class="results-details" id="results-details">
+                <!-- Détails des résultats -->
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/extraction.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/api_config.js') }}"></script>
+</body>
+</html>

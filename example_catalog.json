@@ -1,0 +1,83 @@
+{
+  "Documents médicaux": {
+    "diagnostic": {
+      "type": "text",
+      "description": "Diagnostic médical principal",
+      "allowed_values": ["Hypertension", "Diabète", "Asthme", "Migraine", "Grippe"]
+    },
+    "traitement": {
+      "type": "text",
+      "description": "Traitement prescrit",
+      "allowed_values": []
+    },
+    "date_consultation": {
+      "type": "date",
+      "description": "Date de la consultation",
+      "allowed_values": []
+    },
+    "medecin": {
+      "type": "text",
+      "description": "Nom du médecin traitant",
+      "allowed_values": []
+    },
+    "patient": {
+      "type": "text",
+      "description": "Informations du patient",
+      "allowed_values": []
+    }
+  },
+  "Documents juridiques": {
+    "type_contrat": {
+      "type": "text",
+      "description": "Type de contrat",
+      "allowed_values": ["CDI", "CDD", "Freelance", "Prestation", "Consultation"]
+    },
+    "parties": {
+      "type": "text",
+      "description": "Parties impliquées dans le contrat",
+      "allowed_values": []
+    },
+    "date_signature": {
+      "type": "date",
+      "description": "Date de signature du contrat",
+      "allowed_values": []
+    },
+    "montant": {
+      "type": "number",
+      "description": "Montant financier du contrat",
+      "allowed_values": []
+    },
+    "duree": {
+      "type": "text",
+      "description": "Durée du contrat",
+      "allowed_values": []
+    }
+  },
+  "Documentation technique": {
+    "version": {
+      "type": "text",
+      "description": "Version du logiciel ou de la documentation",
+      "allowed_values": ["1.0", "1.1", "2.0", "2.1", "3.0"]
+    },
+    "fonctionnalite": {
+      "type": "text",
+      "description": "Fonctionnalité décrite",
+      "allowed_values": []
+    },
+    "langage": {
+      "type": "text",
+      "description": "Langage de programmation",
+      "allowed_values": ["Python", "JavaScript", "Java", "C++", "Go", "Rust"]
+    },
+    "environnement": {
+      "type": "text",
+      "description": "Environnement d'exécution",
+      "allowed_values": ["Windows", "Linux", "macOS", "Docker", "Cloud"]
+    },
+    "dependances": {
+      "type": "text",
+      "description": "Dépendances requises",
+      "allowed_values": []
+    }
+  }
+}
